@@ -6,4 +6,4 @@ EXPOSE 80
 RUN mkdir /var/www
 ADD main /var/www/main
 
-ENTRYPOINT /var/wwww/main
+ENTRYPOINT /var/www/main
