@@ -5,6 +5,14 @@ build:
             name: Go environment
             code: go env
         - script:
+            name: Go workspace
+            code: |
+                export GOPATH="$HOME/go"
+                mkdir -p "$GOPATH/{src,bin,pkg}"
+                mkdir -p "$GOPATH/src/github.com/pjvds/docker-to-digital-ocean-example"
+                rsync -avz "$WERCKER_SOURCE_DIR/" "$GOPATH/src/github.com/pjvds/docker-to-digital-ocean-example"
+                export WERCKER_SOURCE_DIR="$GOPATH/src/github.com/pjvds/docker-to-digital-ocean-example"
+        - script:
             name: Go get
             code: go get
         - script:
