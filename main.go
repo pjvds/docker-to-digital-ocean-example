@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
@@ -10,13 +11,17 @@ import (
 
 var (
 	counters = make(map[string]uint64)
+	host     = flag.String("host", "localhost", "the host to bind on")
+	port     = flag.Int("port", 8080, "the port to bind on")
 )
 
 func main() {
+	flag.Parse()
+
 	counterRouter := mux.NewRouter()
 	counterRouter.HandleFunc("/counter/{name}", CounterHandler)
 
-	address := "localhost:8080"
+	address := fmt.Sprintf("%v:%v", *host, *port)
 
 	println("Hosting at " + address)
 	if err := http.ListenAndServe(address, handlers.LoggingHandler(os.Stdout, counterRouter)); err != nil {
