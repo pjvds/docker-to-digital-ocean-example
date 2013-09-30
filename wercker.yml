@@ -5,8 +5,8 @@ build:
         - script:
             name: Go workspace
             code: |
-                sudo apt-get update
-                sudo apt-get install git
+                sudo apt-get update -y -qq
+                sudo apt-get install git -y -qq
 
                 wget https://go.googlecode.com/files/go1.1.linux-amd64.tar.gz
                 sudo tar -C /usr/local -xzf go1.1.linux-amd64.tar.gz
