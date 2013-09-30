@@ -1,0 +1,12 @@
+box: ami-7f97d816
+box-type: ami
+	build:
+		steps:
+			- install-package:
+					packages: golang
+			- setup-go-workspace
+			- script:
+					name: Go build
+					code: |-
+						go get -v ./...
+						go build -v -o main
