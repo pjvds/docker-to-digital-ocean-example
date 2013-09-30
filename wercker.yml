@@ -1,7 +1,11 @@
 box: wercker/golang
 build:
   steps:
-   	- pjvds/setup-go-workspace
+   	- script:
+   			name: Go environment
+   			code: |-
+   				go version
+   				go env
 
     - script:
         name: Get dependencies
