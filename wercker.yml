@@ -5,17 +5,12 @@ build:
     - script:
         name: Get dependencies
         code: |-
-            go get -v ./...
+            sudo go get -v ./...
 
     - script:
         name: Build
         code: |
-            go build -a -v ./...
-
-    - script:
-        name: Test
-        code: |-
-            go test ./...
+            sudo go build -o main
 
     - script:
         name: Copy output
