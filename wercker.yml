@@ -1,17 +1,17 @@
 box: wercker/golang
 build:
-  steps:
-    - script:
-        name: Go environment
-        code: go env
+	steps:
+		- script:
+			name: Go environment
+			code: go env
 
-    - script:
-        name: Build
-        code: |
-					sudo go get -v ./...
-					sudo go build -o main
+		- script:
+			name: Build
+			code: |
+				sudo go get -v ./...
+				sudo go build -o main
 
-    - script:
-        name: Copy output
-        code: |-
-					rsync -avz "$WERCKER_SOURCE_DIR/" "$WERCKER_OUTPUT_DIR"
+		- script:
+			name: Copy output
+			code: |-
+				rsync -avz "$WERCKER_SOURCE_DIR/" "$WERCKER_OUTPUT_DIR"
