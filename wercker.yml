@@ -1,4 +1,5 @@
-box: wercker/golang
+box: ami-7f97d816
+box-type: ami
 build:
     steps:
         - script:
