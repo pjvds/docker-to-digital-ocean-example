@@ -35,3 +35,18 @@ build:
             code: |
                 CID=$(sudo docker run -d -entrypoint="/bin/sh" pjvds/counter /bin/echo hello world)
                 sudo docker export $CID > $WERCKER_OUTPUT_DIR/counter.tar
+deploy:
+    steps:
+        - script:
+            name: Setup environment
+            code: |
+                export REMOTE_HOST="162.243.131.112"
+                export REPOSITORY_NAME="pjvds/counter"
+        - script:
+            name: Copy container
+            code: |
+                scp counter.tar root@$REMOTE_HOST:/tmp/counter.tar
+                CID=$(ssh root@$REMOTE_HOST "cat /tmp/counter.tar | docker import - $REPOSITORY_NAME")
+                ssh root@$REMOTE_HOST "docker ps | tail -n +2 | awk '{print $1}' | xargs docker stop"
+                ssh root@$REMOTE_HOST "docker ps -a | tail -n +2 | awk '{print $1}' | xargs docker rm"
+                ssh root@$REMOTE_HOST "docker run -p=80:80 pjvds/counter --host=0.0.0.0"
