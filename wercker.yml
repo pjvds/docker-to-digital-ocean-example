@@ -1,7 +1,8 @@
 box: wercker/golang
 build:
   steps:
-   
+   	- wercker/setup-go-workspace
+
     - script:
         name: Get dependencies
         code: |-
