@@ -1,9 +1,23 @@
 box: wercker/golang
 build:
-	steps:
-		- setup-go-workspace
-		- script:
-				name: Go build
-				code: |-
-					go get -v ./...
-					go build -v -o main
+  steps:
+   
+    - script:
+        name: Get dependencies
+        code: |-
+            go get -v ./...
+
+    - script:
+        name: Build
+        code: |
+            go build -a -v ./...
+
+    - script:
+        name: Test
+        code: |-
+            go test ./...
+
+    - script:
+        name: Copy output
+        code: |-
+          rsync -avz "$WERCKER_SOURCE_DIR/" "$WERCKER_OUTPUT_DIR"
