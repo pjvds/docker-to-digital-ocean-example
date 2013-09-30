@@ -37,6 +37,8 @@ build:
                 sudo docker export $CID > $WERCKER_OUTPUT_DIR/counter.tar
 deploy:
     steps:
+        - wercker/add-ssh-key:
+            keyname: REMOTE_HOST_KEY
         - script:
             name: Setup environment
             code: |
