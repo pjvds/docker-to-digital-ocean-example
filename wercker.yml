@@ -1,21 +1,17 @@
 box: wercker/golang
 build:
   steps:
-   	- script:
-   			name: Go environment
-   			code: |-
-   				go version
-   				go env
-
     - script:
-        name: Get dependencies
+        name: Go environment
         code: |-
-            sudo go get -v ./...
+        	go version
+        	go env
 
     - script:
         name: Build
         code: |
-            sudo go build -o main
+          sudo go get -v ./...
+          sudo go build -o main
 
     - script:
         name: Copy output
