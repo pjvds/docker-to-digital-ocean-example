@@ -6,10 +6,13 @@ build:
 			code: go env
 
 		- script:
-			name: Build
+			name: Go get
+			code: go get
+
+		- script:
+			name: Go build
 			code: |
-				sudo go get -v ./...
-				sudo go build -o main
+				go build -o main
 
 		- script:
 			name: Copy output
