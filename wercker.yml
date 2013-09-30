@@ -44,6 +44,8 @@ deploy:
             code: |
                 export REMOTE_HOST="162.243.131.112"
                 export REPOSITORY_NAME="pjvds/counter"
+        - add-to-known_hosts:
+            hostname: $REMOTE_HOST
         - script:
             name: Copy container
             code: |
