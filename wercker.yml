@@ -29,9 +29,9 @@ build:
             code: go build -o main
         - script:
             name: Build container
-            code: docker build -t="pjvds/counter" .
+            code: sudo docker build -t="pjvds/counter" .
         - script:
             name: Export container
             code: |
-                CID=$(docker run -d -entrypoint="/bin/sh" pjvds/counter /bin/echo hello world)
-                docker export $CID > $WERCKER_OUTPUT_DIR/counter.tar
+                CID=$(sudo docker run -d -entrypoint="/bin/sh" pjvds/counter /bin/echo hello world)
+                sudo docker export $CID > $WERCKER_OUTPUT_DIR/counter.tar
