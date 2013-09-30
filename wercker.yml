@@ -13,7 +13,6 @@ build:
                 export PATH="$PATH:/usr/local/go/bin"
                 export PATH="$PATH:$GOPATH/bin"
 
-
                 export GOPATH="$HOME/go"
                 mkdir -p "$GOPATH/{src,bin,pkg}"
                 mkdir -p "$GOPATH/src/github.com/pjvds/docker-to-digital-ocean-example"
@@ -29,5 +28,10 @@ build:
             name: Go build
             code: go build -o main
         - script:
-            name: Copy output
-            code: rsync -avz "$WERCKER_SOURCE_DIR/" "$WERCKER_OUTPUT_DIR"
+            name: Build container
+            code: docker build -t="pjvds/counter" .
+        - script:
+            name: Export container
+            code: |
+                CID=$(docker run -d -entrypoint="/bin/sh" pjvds/counter /bin/echo hello world)
+                docker export $CID > $WERCKER_OUTPUT_DIR/counter.tar
