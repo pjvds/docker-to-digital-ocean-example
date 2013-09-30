@@ -1,5 +1,4 @@
-box: ami-7f97d816
-box-type: ami
+box: wercker/golang
 build:
 	steps:
 		- setup-go-workspace
