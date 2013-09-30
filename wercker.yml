@@ -4,17 +4,12 @@ build:
 		- script:
 			name: Go environment
 			code: go env
-
 		- script:
 			name: Go get
 			code: go get
-
 		- script:
 			name: Go build
-			code: |
-				go build -o main
-
+			code: go build -o main
 		- script:
 			name: Copy output
-			code: |-
-				rsync -avz "$WERCKER_SOURCE_DIR/" "$WERCKER_OUTPUT_DIR"
+			code: rsync -avz "$WERCKER_SOURCE_DIR/" "$WERCKER_OUTPUT_DIR"
