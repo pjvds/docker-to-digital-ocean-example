@@ -49,7 +49,7 @@ deploy:
         - script:
             name: Copy container
             code: |
-                scp counter.tar root@$REMOTE_HOST:/tmp/counter.tar
+                scp counter.tar root@$REMOTE_HOST:/tmp/
                 ssh root@$REMOTE_HOST "cat /tmp/counter.tar | docker import - $REPOSITORY_NAME"
                 ssh root@$REMOTE_HOST "rm /tmp/counter.tar"
 
