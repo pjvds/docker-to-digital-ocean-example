@@ -42,7 +42,7 @@ deploy:
         - script:
             name: Setup environment
             code: |
-                export REMOTE_HOST="162.243.131.112"
+                export REMOTE_HOST="counter.born2code.net"
                 export REPOSITORY_NAME="pjvds/counter"
         - add-to-known_hosts:
             hostname: $REMOTE_HOST
@@ -50,8 +50,7 @@ deploy:
             name: Copy container
             code: |
                 scp counter.tar root@$REMOTE_HOST:/tmp/counter.tar
-                CID=$(ssh root@$REMOTE_HOST "cat /tmp/counter.tar | docker import - $REPOSITORY_NAME")
-                echo "Imported container with id $CID to repository $REPOSITORY_NAME"
+                ssh root@$REMOTE_HOST "cat /tmp/counter.tar | docker import - $REPOSITORY_NAME"
 
                 ssh root@$REMOTE_HOST "docker stop \$(docker ps -q)"
-                ssh root@$REMOTE_HOST "docker run -d -p 80:5000 pjvds/counter"
+                ssh root@$REMOTE_HOST "docker run -d -p 80:5000 $REPOSITORY_NAME"
