@@ -20,6 +20,7 @@ build:
                 echo "Container created with id: $CID"
                 sudo docker wait $CID
                 sudo docker export $CID > $WERCKER_OUTPUT_DIR/counter.tar
+                cp post-deploy-tests.sh $WERCKER_OUTPUT_DIR/post-deploy-tests.sh
 deploy:
     steps:
         - wercker/add-ssh-key:
