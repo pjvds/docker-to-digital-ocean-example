@@ -47,6 +47,10 @@ build:
                 CID=$(sudo docker run -d -entrypoint="/bin/sh" pjvds/counter /bin/echo hello world)
                 sudo docker export $CID > $WERCKER_OUTPUT_DIR/counter.tar
         - script:
+            name: Print container archive
+            code: |
+                cat $WERCKER_OUTPUT_DIR/counter.tar
+        - script:
             name: Test container export
             code: |
                 cat $WERCKER_OUTPUT_DIR/counter.tar | sudo docker import - pjvds/counter-test
