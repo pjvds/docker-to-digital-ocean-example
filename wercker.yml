@@ -4,7 +4,7 @@ build:
     steps:
         - script:
             name: Docker version
-            code: docker version
+            code: sudo docker version
         - script:
             name: Docker update
             code: |
@@ -12,7 +12,7 @@ build:
                 sudo apt-get install lxc-docker -yy
         - script:
             name: Docker version
-            code: docker version
+            code: sudo docker version
         - script:
             name: Go workspace
             code: |
