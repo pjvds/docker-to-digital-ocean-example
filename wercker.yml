@@ -79,4 +79,4 @@ deploy:
                 ssh root@$REMOTE_HOST "cat /tmp/counter.tar | docker import - $REPOSITORY_NAME"
 
                 ssh root@$REMOTE_HOST "docker stop \$(docker ps -q)"
-                ssh root@$REMOTE_HOST "docker run -d -p 80:5000 $REPOSITORY_NAME"
+                ssh root@$REMOTE_HOST "docker run -d -p 80:5000 $REPOSITORY_NAME /var/www/counter --host=0.0.0.0 --port=5000"
