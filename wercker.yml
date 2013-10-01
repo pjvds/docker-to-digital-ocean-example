@@ -4,7 +4,7 @@ build:
     steps:
         - script:
             name: Go workspace
-            code: source setup-environment
+            code: source setup-environment.sh
         - script:
             name: Go build
             code: |
@@ -39,7 +39,6 @@ deploy:
             name: Run Container
             code: |
                 CID=$(ssh root@$REMOTE_HOST "docker run -d -p 80:5000 $REPOSITORY_NAME /var/www/main --host=0.0.0.0 --port=5000")
-            - script:
         - script:
             name: Post deploy tests
             code: source post-deploy-tests.sh
