@@ -38,10 +38,6 @@ build:
                 sudo docker wait $CID    
                 sudo docker export $CID > $WERCKER_OUTPUT_DIR/counter.tar
         - script:
-            name: Print container archive
-            code: |
-                cat $WERCKER_OUTPUT_DIR/counter.tar | head -n 50
-        - script:
             name: Test container export
             code: |
                 cat $WERCKER_OUTPUT_DIR/counter.tar | sudo docker import - pjvds/counter-test
