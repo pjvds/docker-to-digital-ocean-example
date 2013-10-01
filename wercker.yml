@@ -35,6 +35,9 @@ build:
             code: |
                 CID=$(sudo docker run -d -entrypoint="/bin/sh" pjvds/counter /bin/echo hello world)
                 sudo docker export $CID > $WERCKER_OUTPUT_DIR/counter.tar
+        - script:
+            name: Output dir contant
+            code: ls -asl
 deploy:
     steps:
         - wercker/add-ssh-key:
@@ -49,7 +52,7 @@ deploy:
         - script:
             name: Copy container
             code: |
-                ssh counter.tar root@$REMOTE_HOST "rm --force /tmp/counter.tar"
+                ssh root@$REMOTE_HOST "rm --force /tmp/counter.tar"
                 scp counter.tar root@$REMOTE_HOST:/tmp/counter.tar
                 ssh root@$REMOTE_HOST "cat /tmp/counter.tar | docker import - $REPOSITORY_NAME"
 
