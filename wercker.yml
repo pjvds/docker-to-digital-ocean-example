@@ -39,7 +39,7 @@ build:
             name: Output dir contant
             code: |
                 cd $WERCKER_OUTPUT_DIR
-                ls -asl
+                ls -sl
 deploy:
     steps:
         - wercker/add-ssh-key:
