@@ -39,7 +39,7 @@ func CounterHandler(response http.ResponseWriter, request *http.Request) {
 	fmt.Fprintf(response, "%v", count(name))
 }
 
-func count(name string) {
+func count(name string) uint64 {
 	lower := strings.ToLower(name)
 	mutex.Lock()
 	defer mutex.Unlock()
@@ -51,4 +51,6 @@ func count(name string) {
 		count = 1
 	}
 	counters[lower] = count
+
+	return count
 }
