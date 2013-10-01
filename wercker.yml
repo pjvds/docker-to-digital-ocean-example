@@ -38,7 +38,7 @@ build:
         - script:
             name: Test container export
             code: |
-                cat $WERCKER_OUTPUT_DIR/counter.tar | docker import - pjvds/counter-test
+                cat $WERCKER_OUTPUT_DIR/counter.tar | sudo docker import - pjvds/counter-test
         - script:
             name: Output dir contant
             code: |
