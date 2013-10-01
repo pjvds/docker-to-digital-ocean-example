@@ -37,7 +37,9 @@ build:
                 sudo docker export $CID > $WERCKER_OUTPUT_DIR/counter.tar
         - script:
             name: Output dir contant
-            code: ls -asl
+            code: |
+                cd $WERCKER_OUTPUT_DIR
+                ls -asl
 deploy:
     steps:
         - wercker/add-ssh-key:
