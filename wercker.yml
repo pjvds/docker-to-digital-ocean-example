@@ -3,6 +3,17 @@ box-type: ami
 build:
     steps:
         - script:
+            name: Docker version
+            code: docker version
+        - script:
+            name: Docker update
+            code: |
+                sudo apt-get update -q -yy
+                sudo apt-get install lxc-docker -yy
+        - script:
+            name: Docker version
+            code: docker version
+        - script:
             name: Go workspace
             code: |
                 sudo apt-get update -y -qq
