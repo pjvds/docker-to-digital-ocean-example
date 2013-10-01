@@ -37,35 +37,31 @@ build:
                 echo "Container created with id: $CID"
                 sudo docker wait $CID    
                 sudo docker export $CID > $WERCKER_OUTPUT_DIR/counter.tar
-        - script:
-            name: Test container export
-            code: |
-                cat $WERCKER_OUTPUT_DIR/counter.tar | sudo docker import - pjvds/counter-test
-        - script:
-            name: Output dir contant
-            code: |
-                cd $WERCKER_OUTPUT_DIR
-                ls -asl
 deploy:
     steps:
         - wercker/add-ssh-key:
             keyname: REMOTE_HOST_KEY
         - script:
-            name: Setup environment
+            name: Setup Environment
             code: |
                 export REMOTE_HOST="counter.born2code.net"
                 export REPOSITORY_NAME="pjvds/counter"
         - add-to-known_hosts:
             hostname: $REMOTE_HOST
         - script:
-            name: Copy container
+            name: Copy Container
             code: |
                 ssh root@$REMOTE_HOST "rm --force /tmp/counter.tar"
                 scp counter.tar root@$REMOTE_HOST:/tmp/counter.tar
                 ssh root@$REMOTE_HOST "cat /tmp/counter.tar | docker import - $REPOSITORY_NAME"
-
-                ssh root@$REMOTE_HOST "docker stop \$(docker ps -q)"
+        - script:
+            name: Stop Container
+            code: ssh root@$REMOTE_HOST "docker stop \$(docker ps -q)"
+        - script:
+            name: Run Container
+            code: |
                 CID=$(ssh root@$REMOTE_HOST "docker run -d -p 80:5000 $REPOSITORY_NAME /var/www/main --host=0.0.0.0 --port=5000")
-
                 sleep 5
-                ssh root@$REMOTE_HOST "docker logs $CID"
+        - script:
+            name: Show Logs
+            code: ssh root@$REMOTE_HOST "docker logs $CID"
