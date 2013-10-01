@@ -49,7 +49,7 @@ build:
         - script:
             name: Print container archive
             code: |
-                cat $WERCKER_OUTPUT_DIR/counter.tar
+                cat $WERCKER_OUTPUT_DIR/counter.tar | head -n 50
         - script:
             name: Test container export
             code: |
