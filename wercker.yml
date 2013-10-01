@@ -54,5 +54,4 @@ deploy:
                 echo "Imported container with id $CID to repository $REPOSITORY_NAME"
 
                 ssh root@$REMOTE_HOST "docker stop \$(docker ps -q)"
-
-                ssh root@$REMOTE_HOST "docker run -d -p=80:80 $REPOSITORY_NAME /var/www/main --host=0.0.0.0 --port=80"
+                ssh root@$REMOTE_HOST "docker run -d -p 80:5000 pjvds/counter"
