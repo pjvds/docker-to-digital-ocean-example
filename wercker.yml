@@ -51,6 +51,8 @@ deploy:
             code: |
                 scp counter.tar root@$REMOTE_HOST:/tmp/counter.tar
                 CID=$(ssh root@$REMOTE_HOST "cat /tmp/counter.tar | docker import - $REPOSITORY_NAME")
+                echo "Imported container with id $CID to repository $REPOSITORY_NAME"
+
                 ssh root@$REMOTE_HOST "docker ps | tail -n +2 | awk '{print $1}' | xargs -r docker stop"
                 ssh root@$REMOTE_HOST "docker ps -a | tail -n +2 | awk '{print $1}' | xargs -r docker rm"
                 ssh root@$REMOTE_HOST "docker run -p=80:80 pjvds/counter /var/www/main --host=0.0.0.0 --port=80"
