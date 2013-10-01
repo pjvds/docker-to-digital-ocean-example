@@ -35,17 +35,12 @@ build:
             code: |
                 CID=$(sudo docker run -d -entrypoint="/bin/sh" pjvds/counter /bin/echo hello world)
                 echo "Container created with id: $CID"
-                sudo docker wait $CID    
+                sudo docker wait $CID
                 sudo docker export $CID > $WERCKER_OUTPUT_DIR/counter.tar
 deploy:
     steps:
         - wercker/add-ssh-key:
             keyname: REMOTE_HOST_KEY
-        - script:
-            name: Setup Environment
-            code: |
-                export REMOTE_HOST="counter.born2code.net"
-                export REPOSITORY_NAME="pjvds/counter"
         - add-to-known_hosts:
             hostname: $REMOTE_HOST
         - script:
@@ -61,7 +56,7 @@ deploy:
             name: Run Container
             code: |
                 CID=$(ssh root@$REMOTE_HOST "docker run -d -p 80:5000 $REPOSITORY_NAME /var/www/main --host=0.0.0.0 --port=5000")
-                sleep 5
+            - script:
         - script:
-            name: Show Logs
-            code: ssh root@$REMOTE_HOST "docker logs $CID"
+            name: Post deploy tests
+            code: source post-deploy-tests.sh
