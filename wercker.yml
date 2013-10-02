@@ -3,18 +3,18 @@ box-type: ami
 build:
     steps:
         - script:
-            name: Go workspace
+            name: Setup Go Workspace
             code: source setup-environment.sh
         - script:
-            name: Go build
+            name: Go Build
             code: |
                 go get
                 go build -o main
         - script:
-            name: Build container
+            name: Build Container
             code: sudo docker build -t="pjvds/counter" .
         - script:
-            name: Export container
+            name: Export Container
             code: |
                 CID=$(sudo docker run -d -entrypoint="/bin/sh" pjvds/counter /bin/echo hello world)
                 echo "Container created with id: $CID"
@@ -40,6 +40,3 @@ deploy:
             name: Run Container
             code: |
                 CID=$(ssh root@$REMOTE_HOST "docker run -d -p 80:5000 $REPOSITORY_NAME /var/www/main --host=0.0.0.0 --port=5000")
-        # - script:
-        #     name: Post deploy tests
-        #     code: source post-deploy-tests.sh
