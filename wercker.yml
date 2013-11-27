@@ -1,7 +1,10 @@
-box: ami-7f97d816
+box: wercker-labs/docker
 box-type: ami
 build:
     steps:
+        - script:
+            name: Print docker version
+            code: sudo docker version
         - script:
             name: Setup Go Workspace
             code: source setup-environment.sh
