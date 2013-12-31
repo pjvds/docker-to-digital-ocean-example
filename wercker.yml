@@ -5,7 +5,7 @@ build:
             name: Print docker version
             code: sudo docker version
         - script:
-            name: Setup Go Workspace
+            name: Setup Go workspace
             code: source setup-environment.sh
         - script:
             name: Go Build
